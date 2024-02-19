@@ -1,0 +1,2 @@
+# MSUClassIC
+Academic Course Scheduler
