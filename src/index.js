@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getAuth, onAuthStateChanged } from 'firebase/auth'
+import {getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,8 +20,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp)
+
 
 onAuthStateChanged(auth, user => {
     if (user != null) {
