@@ -57,8 +57,8 @@
 
 <template>
   <div>
-    <div v-if="user">{{ user?.email }} <button @click="signout">Sign Out</button></div>
-    <form @submit.prevent="submit">
+    <div class="welcome" v-if="user">Welcome {{user.email}} <br/><button @click="signout">Sign Out</button></div>
+    <form v-else @submit.prevent="submit">
       <div>
         <input v-model="data.email" type="email" placeholder="Email" />
       </div> 
@@ -72,3 +72,29 @@
     </form>
   </div>
 </template>
+
+<style scoped>
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input {
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  button {
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    align-items: center;
+  }
+
+  .welcome {
+    font-size: 2rem;
+    text-align: center;
+  }
+</style>

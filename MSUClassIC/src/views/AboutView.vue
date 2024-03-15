@@ -1,6 +1,8 @@
+
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h3>MSUClassIC helps you figure out you <br /> 
+    schedule your department's classes</h3>
   </div>
 </template>
 
@@ -8,8 +10,10 @@
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
-    display: flex;
+    display: inline-block ;
+    text-align: center;
     align-items: center;
+    width: 100%;
   }
 }
 </style>
