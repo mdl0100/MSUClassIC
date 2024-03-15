@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "firebase": "^10.9.0",
+    "grid-layout-plus": "^1.0.4",
     "vue": "^3.4.21",
+    "vue-grid-layout-v3": "^3.0.3",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {

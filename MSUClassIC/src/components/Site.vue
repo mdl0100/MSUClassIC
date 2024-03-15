@@ -3,6 +3,7 @@
   import {auth} from '@/firebase.js'  
   import { signOut, getAuth } from 'firebase/auth';
   import ToolOption from './ToolOption.vue'
+  import Grid from './Grid.vue';
   
   async function signout(){
     await signOut(auth).then(() => {
@@ -17,6 +18,10 @@
   <div class='tool'>
     <ToolOption />
   </div>
+  <div class="grid">
+     <Grid />
+  </div>
+ 
 </template>
 
 <style scoped>
@@ -25,7 +30,12 @@
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    height: 100vh;
+    padding-bottom: 2rem;
     padding-top: 2rem;
+  }
+  
+  .grid {
+    display: block;
+    padding: 2rem;
   }
 </style>

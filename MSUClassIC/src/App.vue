@@ -35,6 +35,7 @@ import Site from './components/Site.vue'
   line-height: 2;
   max-height: 100vh;
   width: 100%;
+  padding-top:1rem;
 }
 
 .logo {
@@ -64,7 +65,7 @@ nav a {
 }
 
 
-@media (min-width: 1024px) {
+@media (min-width: 800px) {
   header {
     display: flex;
     align-items: center;

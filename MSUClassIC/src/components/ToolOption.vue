@@ -1,8 +1,8 @@
 <template>
     <div class="dropdown">
       <label for="views">Views:</label>
-      <select id="views" name="views">
-        <option value="0">Select a view</option>
+      <select id="views" name="views" v-model="selected">
+        <option disabled value="">Please select one</option>
         <option value="1">Faculty vs Time</option>
         <option value="2">Faculty vs Course</option>
         <option value="3">Course vs Time</option>
@@ -12,7 +12,19 @@
   </template>
   
 <script>
-
+  export default{
+    data(){
+      return{
+        view: ''
+      }
+    },
+    methods: {
+      selected(){
+        this.view = this.selected
+        console.log(this.view)
+      }
+    }
+  }
 </script>
 
 <style scoped>
