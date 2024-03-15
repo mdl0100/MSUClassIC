@@ -52,6 +52,7 @@
 
   onAuthStateChanged(auth, currentUser => {
     user ? user.value = currentUser : user.value = null;
+    this.$emit('user', user.value);
   });
 </script>
 

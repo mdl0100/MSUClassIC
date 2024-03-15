@@ -26,11 +26,7 @@ const router = createRouter({
         requiresAuth: true
       },
     },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../components/Login.vue')
-    }
+
   ]
 })
 

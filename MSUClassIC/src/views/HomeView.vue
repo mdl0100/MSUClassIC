@@ -5,9 +5,7 @@ import Site from '../components/Site.vue'
 </script>
 
 <template>
-  <main>
-    <h1>Welcome to MSUClassIC</h1>
-  </main>
+  
 </template>
 
 
