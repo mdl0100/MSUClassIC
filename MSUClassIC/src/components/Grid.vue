@@ -27,6 +27,7 @@ import { reactive } from 'vue'
 import { ref } from 'vue'
 
 let index = 5
+let display = false
 
 const draggable = ref(true)
 const resizable = ref(true)
@@ -79,6 +80,10 @@ function anchor(id){
   }
 }
 
+function dispLayout(){
+  display = !display
+  console.log(JSON.stringify(layout))
+}
 </script>
 
 <template>
@@ -93,8 +98,11 @@ function anchor(id){
       </select>
     </div>
   <button type="button" @click="addItem" >Add Item</button>
+  <button type="button" @click="dispLayout" >Layout</button>
+
 
   <h3 >This is the View: </h3>
+  <p v-if="display"> This is the layout: {{ layout }}</p>
   <GridLayout 
     v-model:layout="layout" 
     :row-height="30"
@@ -180,15 +188,15 @@ label {
     font-size: 1.5rem;
   }
   
-  select {
-    font-size: 1.5rem;
-    margin-left: 2rem;
-  }
+select {
+  font-size: 1.5rem;
+  margin-left: 2rem;
+}
 
-  .dropdown {
-    /* Center items on page */
-    display: block;
-    align-items: center;
+.dropdown {
+  /* Center items on page */
+  display: block;
+  align-items: center;
 
 }
 </style>
