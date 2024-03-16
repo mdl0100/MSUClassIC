@@ -5,19 +5,10 @@
   import ToolOption from './ToolOption.vue'
   import Grid from './Grid.vue';
   
-  async function signout(){
-    await signOut(auth).then(() => {
-      console.log('signed out');
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
 </script>
 
 <template>
-  <div class='tool'>
-    <ToolOption />
-  </div>
+
   <div class="grid">
      <Grid />
   </div>
