@@ -1,68 +1,84 @@
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import Login from './components/Login.vue'
-import Site from './components/Site.vue'
+import { RouterLink, RouterView } from 'vue-router' // For navigtion bar
+//No longer used, now incorporated into App.vue
+  // import Login from './components/Login.vue' 
+import Site from './components/Site.vue'            // For the site page
 
-import {auth} from '@/firebase.js'
+import {auth} from '@/firebase.js'                  // For authentication of Users    
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { ref } from 'vue';
-import router from './router';
+import { ref } from 'vue';                          
+import router from './router';                      // For routing to different pages          
+// import UserAuth from './components/UserAuth';
 
-  const data = ref({
-    email: '',
-    password: ''
+// const userAuth = new UserAuth();
+// userAuth.router = router;
+
+// const {user, data, mode } = userAuth;
+// const {login, register, submit, signout} = userAuth;
+
+
+const data = ref({
+  email: '',
+  password: ''
+});
+
+const mode = ref('login');
+const user = ref(null);
+
+// 
+async function login(email, password){
+  await signInWithEmailAndPassword(auth, email, password).then((res) => {
+    console.log(res);
+  }).catch((error) => {
+    console.log(error);
   });
-
-  const mode = ref('login');
-  const user = ref(null);
-
-  function
-    toggleMode(val){
-    mode.value = val;
+  // If user is logged in, redirect to site page
+  // Also pull the user's data from the database
+  if (user.value){
+    fetchUserData();
+    router.push('/site');
   }
+}
 
-  async function login(email, password){
-    await signInWithEmailAndPassword(auth, email, password).then((res) => {
-      console.log(res);
-    }).catch((error) => {
-      console.log(error);
-    });
-    if (user.value){
-      router.push('/site');
-    }
-  }
-
-  async function register(email, password){
-    await createUserWithEmailAndPassword(auth, email, password).then((res) => {
-      console.log(res);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  function submit(){
-    let email = data.value.email;
-    let password = data.value.password;
-    if (mode.value === 'login'){
-      login(email, password);
-    } else {
-      register(email, password);
-    }
-  }
-
-  async function signout(){
-    await signOut(auth).then(() => {
-      console.log('signed out');
-    }).catch((error) => {
-      console.log(error);
-    });
-    router.push('/');
-  }
-
-  onAuthStateChanged(auth, currentUser => {
-    user ? user.value = currentUser : user.value = null;
+async function register(email, password){
+  await createUserWithEmailAndPassword(auth, email, password).then((res) => {
+    console.log(res);
+  }).catch((error) => {
+    console.log(error);
   });
+}
+
+function submit(){
+  let email = data.value.email;
+  let password = data.value.password;
+  if (mode.value === 'login'){
+    login(email, password);
+  } else {
+    register(email, password);
+  }
+}
+
+async function signout(){
+  await signOut(auth).then(() => {
+    console.log('signed out');
+  }).catch((error) => {
+    console.log(error);
+  });
+  router.push('/');
+}
+
+//NOT DONE
+function fetchUserData(){
+  // Fetch user data from the database
+  // This will be used to populate the site page
+  console.log('fetching user data');
+}
+
+
+onAuthStateChanged(auth, currentUser => {
+  user ? user.value = currentUser : user.value = null;
+});
 </script>
 
 
@@ -70,7 +86,7 @@ import router from './router';
 
 
   <header>
-    <img alt="MSUClassIC logo" class="logo" src="@/assets/logo.png" width="125" height="125" />
+    <img alt="MSUClassIC logo" class="logo" src="@/assets/logo.png" width="125" height="125" @click="router.push('/')"/>
    <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -91,7 +107,7 @@ import router from './router';
         <input v-model="data.password" type="password" placeholder="Password" />
       </div>
       <button type="submit">{{mode ==='login' ? 'Login' : "Register"}}</button>
-      <div @click="toggleMode(mode ==='login' ? 'register' : 'login')">
+      <div @click="mode ==='login' ? 'register' : 'login'">
       {{ mode === 'login' ? 'Need an account?' : 'Already have a user? Login' }}
       </div>
     </form>

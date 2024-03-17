@@ -35,7 +35,7 @@ const colNum = ref(12)
 
 
 const layout = reactive([
-    { x: 0, y: 0, w: 2, h: 1, i: '', static: true },
+
     { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
     { x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
     { x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
