@@ -1,8 +1,8 @@
 
 <template>
   <div class="about">
-    <h3>MSUClassIC helps you figure out you <br /> 
-    schedule your department's classes</h3>
+    <h3>MSUClassIC helps you figure out  <br /> 
+     your department's classes schedule</h3>
   </div>
 </template>
 

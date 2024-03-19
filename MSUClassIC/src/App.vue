@@ -20,11 +20,18 @@ import router from './router';                      // For routing to different 
 
 const data = ref({
   email: '',
-  password: ''
+  password: '',
+  department: ''
 });
 
 const mode = ref('login');
 const user = ref(null);
+
+function
+    toggleMode(val){
+    mode.value = val;
+  }
+
 
 // 
 async function login(email, password){
@@ -41,24 +48,32 @@ async function login(email, password){
   }
 }
 
-async function register(email, password){
+async function register(email, password, department){
   await createUserWithEmailAndPassword(auth, email, password).then((res) => {
-    console.log(res);
+    console.log(res)
+    let token = res;
   }).catch((error) => {
     console.log(error);
   });
+  // If registering, send user token and department to the database
+  console.log(email);
+  console.log(department);
+
 }
 
+// On submit, the user will either login or register
 function submit(){
   let email = data.value.email;
   let password = data.value.password;
+  let department = data.value.department;
   if (mode.value === 'login'){
     login(email, password);
   } else {
-    register(email, password);
+    register(email, password, department);
   }
 }
 
+// Signout the user
 async function signout(){
   await signOut(auth).then(() => {
     console.log('signed out');
@@ -106,9 +121,12 @@ onAuthStateChanged(auth, currentUser => {
       <div>
         <input v-model="data.password" type="password" placeholder="Password" />
       </div>
+      <div v-if="mode !== 'login'">
+        <input v-model="data.department" type="text" placeholder="Department" />
+      </div>
       <button type="submit">{{mode ==='login' ? 'Login' : "Register"}}</button>
-      <div @click="mode ==='login' ? 'register' : 'login'">
-      {{ mode === 'login' ? 'Need an account?' : 'Already have a user? Login' }}
+      <div @click="toggleMode(mode ==='login' ? 'register' : 'login')">
+      {{ mode === 'login' ? 'Need an account? Register' : 'Already have a user? Login' }}
       </div>
     </form>
   </div> 

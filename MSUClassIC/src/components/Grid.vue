@@ -63,6 +63,8 @@ function addItem(){
     w: 2,
     h: 2,
     i: `${window.prompt('Enter the name of the Course', `Item ${index++}`)}\n${window.prompt('Enter the location of the Course', ``)}` ,
+    static: false,
+    moved: false
   })
 }
 
@@ -98,11 +100,11 @@ function dispLayout(){
       </select>
     </div>
   <button type="button" @click="addItem" >Add Item</button>
-  <button type="button" @click="dispLayout" >Layout</button>
+  <button type="button" @click="dispLayout" >Save</button>
 
 
   <h3 >This is the View: </h3>
-  <p v-if="display"> This is the layout: {{ layout }}</p>
+  <!-- <p v-if="display"> This is the layout: {{ layout }}</p> -->
   <GridLayout 
     v-model:layout="layout" 
     :row-height="30"
