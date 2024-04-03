@@ -188,6 +188,7 @@ button {
 
 label {
     font-size: 1.5rem;
+    border-radius: 5px;
   }
   
 select {
