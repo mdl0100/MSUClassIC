@@ -1,4 +1,87 @@
-<script>
+<script setup>
+import { reactive, ref, computed } from 'vue';
+import { GridLayout, GridItem } from 'grid-layout-plus';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+
+// Reactive state for grid layout and column number
+const colNum = ref(12);
+const layout = reactive([
+    { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
+    { x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
+    { x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
+    { x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
+    { x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
+    { x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
+    { x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
+    { x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
+    { x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
+    { x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
+    { x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
+    { x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
+    { x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
+    { x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
+    { x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
+    { x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
+    { x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
+]);
+
+// Index used for item names
+let index = ref(5);
+
+// Reactive state for selected dropdown value
+const selected = ref('');
+
+// Computed property for view description
+const viewDescription = computed(() => {
+  switch (selected.value) {
+    case '1': return 'Faculty vs Time';
+    case '2': return 'Faculty vs Course';
+    case '3': return 'Course vs Time';
+    case '4': return 'Course vs Location';
+    default: return 'Please select a view';
+  }
+});
+
+// Methods
+function addItem() {
+  const itemName = window.prompt('Enter the name of the Course', `Item ${index.value++}`);
+  const itemLocation = window.prompt('Enter the location of the Course', '');
+  layout.push({
+    x: (layout.length) % (colNum.value || 12),
+    y: 3, // places it at the bottom
+    w: 2,
+    h: 2,
+    i: `${itemName}\n${itemLocation}`,
+    static: false,
+    moved: false
+  });
+}
+
+function removeItem(id) {
+  const index = layout.findIndex(item => item.i === id);
+  if (index > -1) {
+    layout.splice(index, 1);
+  }
+}
+
+function anchor(id) {
+  const index = layout.findIndex(item => item.i === id);
+  if (index > -1) {
+    layout[index].static = !layout[index].static;
+  }
+}
+
+function dispLayout() {
+  console.log(JSON.stringify(layout));
+  store.commit('updateLayout', layout);
+}
+</script>
+
+
+<!-- <script>
 import { GridLayout, GridItem } from 'grid-layout-plus';
 import { defineComponent } from 'vue';
 
@@ -8,11 +91,13 @@ export default defineComponent({
         GridLayout,
         GridItem
     },
-    data(){
-      return{
-        view: ''
-      }
-    },
+    data() {
+  return {
+    selected: '', // This will hold the dropdown's selected value
+    view: ''
+  };
+},
+
     methods: {
       selected(){
         this.view = this.selected
@@ -20,9 +105,9 @@ export default defineComponent({
       }
     }
   })
-</script>
+</script> -->
 
-<script setup>
+<!-- <script setup>
 import { reactive } from 'vue'
 import { ref } from 'vue'
 
@@ -86,33 +171,30 @@ function dispLayout(){
   display = !display
   console.log(JSON.stringify(layout))
 }
-</script>
+</script> -->
 
 <template>
-      <div class="dropdown">
-      <label for="views">Views:</label>
-      <select id="views" name="views" v-model="selected">
-        <option disabled value="">Please select one</option>
-        <option value="1">Faculty vs Time</option>
-        <option value="2">Faculty vs Course</option>
-        <option value="3">Course vs Time</option>
-        <option value="4">Course vs Location</option>
-      </select>
-    </div>
-  <button type="button" @click="addItem" >Add Item</button>
-  <button type="button" @click="dispLayout" >Save</button>
-
-
-  <h3 >This is the View: </h3>
-  <!-- <p v-if="display"> This is the layout: {{ layout }}</p> -->
+  <div class="dropdown">
+    <label for="views">Views:</label>
+    <select id="views" name="views" v-model="selected">
+      <option disabled value="">Please select one</option>
+      <option value="1">Faculty vs Time</option>
+      <option value="2">Faculty vs Course</option>
+      <option value="3">Course vs Time</option>
+      <option value="4">Course vs Location</option>
+    </select>
+  </div>
+  <h3>This is the View: {{ viewDescription }}</h3>
+  <button @click="addItem">Add Item</button>
+  <button @click="dispLayout">Display Layout</button>
   <GridLayout 
     v-model:layout="layout" 
     :row-height="30"
     :col-num="14"
-    :vertical-compact=false
+    :vertical-compact="false"
     prevent-collision>
     <template #item="{ item }">
-      <span class="text">{{ `${item.i}` }}</span>
+      <span class="text">{{ item.i }}</span>
       <span class="remove" @click="removeItem(item.i)">-</span>
       <span class="anchor" @click="anchor(item.i)">⚓</span>
     </template>

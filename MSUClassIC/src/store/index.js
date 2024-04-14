@@ -9,6 +9,7 @@ export default createStore({
       isAuthenticated: false,
       department: null,
     },
+    layout:[],
   },
   mutations: {
     setUser(state, userData) {
@@ -19,6 +20,9 @@ export default createStore({
     clearUser(state) {
         state.user = { email: null, uid: null, isAuthenticated: false };
       },
+    updateLayout(state, newLayout){
+      state.layout = newLayout;
+    }
   },
   getters: {
     isUserAuthenticated: (state) => state.user.isAuthenticated,
