@@ -7,7 +7,7 @@ export default createStore({
       email: null,
       uid: null,
       isAuthenticated: false,
-      department: null,
+      department: "history",
     },
     layout:[],
   },
@@ -27,5 +27,7 @@ export default createStore({
   getters: {
     isUserAuthenticated: (state) => state.user.isAuthenticated,
     userId: (state) => state.user.uid,
+    userEmail: (state) => state.user.email,
+    userDepartment: (state) => state.user.department,
   },
 });

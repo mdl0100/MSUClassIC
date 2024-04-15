@@ -78,6 +78,14 @@ function dispLayout() {
   console.log(JSON.stringify(layout));
   store.commit('updateLayout', layout);
 }
+
+function getEmail() {
+  console.log(store.getters.userEmail);
+}
+
+function getDepartment() {
+  console.log(store.getters.userDepartment);
+}
 </script>
 
 
@@ -187,6 +195,8 @@ function dispLayout(){
   <h3>This is the View: {{ viewDescription }}</h3>
   <button @click="addItem">Add Item</button>
   <button @click="dispLayout">Display Layout</button>
+  <button @click="getEmail">User Email</button>
+  <button @click="getDepartment">User Dept</button>
   <GridLayout 
     v-model:layout="layout" 
     :row-height="30"
