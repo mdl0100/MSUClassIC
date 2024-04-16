@@ -7,29 +7,87 @@ const store = useStore();
 
 
 // Reactive state for grid layout and column number
-const colNum = ref(12);
-const layout = reactive([
-    { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
-    { x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
-    { x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
-    { x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
-    { x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
-    { x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
-    { x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
-    { x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
-    { x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
-    { x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
-    { x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
-    { x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
-    { x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
-    { x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
-    { x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
-    { x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
-    { x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
-]);
+const example = reactive([
+{ x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
+{ x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
+{ x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
+{ x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
+{ x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
+{ x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
+{ x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
+{ x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
+{ x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
+{ x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
+{ x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
+{ x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
+{ x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
+{ x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
+{ x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
+{ x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
+{ x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
+] )
+const real = reactive([{'x': 1, 'y': 0, 'w': 1, 'h': 1, 'i': 'Colmenares - Diaz', 'static': true},
+ {'x': 2, 'y': 0, 'w': 1, 'h': 1, 'i': 'Griffin', 'static': true},
+ {'x': 3, 'y': 0, 'w': 1, 'h': 1, 'i': 'Hood', 'static': true},
+ {'x': 4, 'y': 0, 'w': 1, 'h': 1, 'i': 'Johnson', 'static': true},
+ {'x': 5, 'y': 0, 'w': 1, 'h': 1, 'i': 'Morgan', 'static': true},
+ {'x': 6, 'y': 0, 'w': 1, 'h': 1, 'i': 'Passos', 'static': true},
+ {'x': 7, 'y': 0, 'w': 1, 'h': 1, 'i': 'Roychoudhuri', 'static': true},
+ {'x': 8, 'y': 0, 'w': 1, 'h': 1, 'i': 'Smith', 'static': true},
+ {'x': 9, 'y': 0, 'w': 1, 'h': 1, 'i': 'Stringfellow', 'static': true},
+ {'x': 0, 'y': 1, 'w': 1, 'h': 1, 'i': 'CMPS 1023', 'static': true},
+ {'x': 4, 'y': 1, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 103.0', 'static': true},
+ {'x': 0, 'y': 2, 'w': 1, 'h': 1, 'i': 'CMPS 1044', 'static': true},
+ {'x': 5, 'y': 2, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 207.0', 'static': true},
+ {'x': 7, 'y': 2, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 109.0', 'static': true},
+ {'x': 0, 'y': 3, 'w': 1, 'h': 1, 'i': 'CMPS 1063', 'static': true},
+ {'x': 1, 'y': 3, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 103.0', 'static': true},
+ {'x': 9, 'y': 3, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 4, 'w': 1, 'h': 1, 'i': 'CMPS 2084', 'static': true},
+ {'x': 6, 'y': 4, 'w': 1, 'h': 1, 'i': 'TR 12:30 BO 320.0', 'static': true},
+ {'x': 0, 'y': 5, 'w': 1, 'h': 1, 'i': 'CMPS 2143', 'static': true},
+ {'x': 9, 'y': 5, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 6, 'w': 1, 'h': 1, 'i': 'CMPS 2433', 'static': true},
+ {'x': 9, 'y': 6, 'w': 1, 'h': 1, 'i': 'MWF 11:00 BO 209.0', 'static': true},
+ {'x': 0, 'y': 7, 'w': 1, 'h': 1, 'i': 'CMPS 3013', 'static': true},
+ {'x': 1, 'y': 7, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 213.0', 'static': true},
+ {'x': 0, 'y': 8, 'w': 1, 'h': 1, 'i': 'CMPS 3533', 'static': true},
+ {'x': 3, 'y': 8, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 109.0', 'static': true},
+ {'x': 0, 'y': 9, 'w': 1, 'h': 1, 'i': 'CMPS 4103', 'static': true},
+ {'x': 6, 'y': 9, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 10, 'w': 1, 'h': 1, 'i': 'CMPS 4123', 'static': true},
+ {'x': 7, 'y': 10, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 109.0', 'static': true},
+ {'x': 0, 'y': 11, 'w': 1, 'h': 1, 'i': 'CMPS 4143', 'static': true},
+ {'x': 2, 'y': 11, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 320.0', 'static': true},
+ {'x': 0, 'y': 12, 'w': 1, 'h': 1, 'i': 'CMPS 4453', 'static': true},
+ {'x': 6, 'y': 12, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 13, 'w': 1, 'h': 1, 'i': 'CMPS 4883', 'static': true},
+ {'x': 2, 'y': 13, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 103.0', 'static': true},
+ {'x': 0, 'y': 14, 'w': 1, 'h': 1, 'i': 'CMPS 5113', 'static': true},
+ {'x': 1, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 209.0', 'static': true},
+ {'x': 4, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 320.0', 'static': true},
+ {'x': 0, 'y': 15, 'w': 1, 'h': 1, 'i': 'CMPS 5133', 'static': true},
+ {'x': 7, 'y': 15, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 16, 'w': 1, 'h': 1, 'i': 'CMPS 5143', 'static': true},
+ {'x': 2, 'y': 16, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 17, 'w': 1, 'h': 1, 'i': 'CMPS 5363', 'static': true},
+ {'x': 8, 'y': 17, 'w': 1, 'h': 1, 'i': 'TR 15:30 BO 320.0', 'static': true},
+ {'x': 0, 'y': 18, 'w': 1, 'h': 1, 'i': 'CMPS 5443', 'static': true},
+ {'x': 4, 'y': 18, 'w': 1, 'h': 1, 'i': 'W 11:00 BO 320.0', 'static': true},
+ {'x': 0, 'y': 19, 'w': 1, 'h': 1, 'i': 'MATH 233', 'static': true},
+ {'x': 3, 'y': 19, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 101.0', 'static': true},
+ {'x': 0, 'y': 20, 'w': 1, 'h': 1, 'i': 'MATH 1233', 'static': true},
+ {'x': 3, 'y': 20, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 101.0', 'static': true},
+ {'x': 0, 'y': 21, 'w': 1, 'h': 1, 'i': 'MATH 1634', 'static': true},
+ {'x': 3, 'y': 21, 'w': 1, 'h': 1, 'i': 'MF 11:00 BO 109.0', 'static': true},
+ {'x': 0, 'y': 22, 'w': 1, 'h': 1, 'i': 'MATH 3533', 'static': true},
+//  {'x': 3, 'y': 22, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 109.0', 'static': true}
+])
+
+ const layout = real
 
 // Index used for item names
-let index = ref(5);
+let index = ref(0);
 
 // Reactive state for selected dropdown value
 const selected = ref('');
@@ -46,6 +104,27 @@ const viewDescription = computed(() => {
 });
 
 // Methods
+const colNum = computed(() => {
+  let maxCol = 0;
+  layout.forEach(item => {
+    if (item.y === 0) { // Consider only items in the first row
+      maxCol = Math.max(maxCol, item.x + item.w);
+    }
+  });
+  return maxCol ; // Twice the number of entries
+});
+
+// Calculate the number of rows required
+const rowNum = computed(() => {
+  let maxRow = 0;
+  layout.forEach(item => {
+    if (item.x === 0) { // Consider only items in the first column
+      maxRow = Math.max(maxRow, item.y + item.h);
+    }
+  });
+  return maxRow; // Twice the number of entries
+});
+
 function addItem() {
   const itemName = window.prompt('Enter the name of the Course', `Item ${index.value++}`);
   const itemLocation = window.prompt('Enter the location of the Course', '');
@@ -60,17 +139,17 @@ function addItem() {
   });
 }
 
-function removeItem(id) {
-  const index = layout.findIndex(item => item.i === id);
-  if (index > -1) {
+function removeItem(itemName) {
+  const index = layout.findIndex(item => item.i === itemName);
+  if (index !== -1) {
     layout.splice(index, 1);
   }
 }
 
-function anchor(id) {
-  const index = layout.findIndex(item => item.i === id);
-  if (index > -1) {
-    layout[index].static = !layout[index].static;
+function anchor(itemName) {
+  const item = layout.find(item => item.i === itemName);
+  if (item) {
+    item.static = !item.static;
   }
 }
 
@@ -87,99 +166,6 @@ function getDepartment() {
   console.log(store.getters.userDepartment);
 }
 </script>
-
-
-<!-- <script>
-import { GridLayout, GridItem } from 'grid-layout-plus';
-import { defineComponent } from 'vue';
-
-
-export default defineComponent({
-    components: {
-        GridLayout,
-        GridItem
-    },
-    data() {
-  return {
-    selected: '', // This will hold the dropdown's selected value
-    view: ''
-  };
-},
-
-    methods: {
-      selected(){
-        this.view = this.selected
-        console.log(this.view)
-      }
-    }
-  })
-</script> -->
-
-<!-- <script setup>
-import { reactive } from 'vue'
-import { ref } from 'vue'
-
-let index = 5
-let display = false
-
-const draggable = ref(true)
-const resizable = ref(true)
-const colNum = ref(12)
-
-
-const layout = reactive([
-
-    { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
-    { x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
-    { x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
-    { x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
-    { x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
-    { x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
-    { x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
-    { x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
-    { x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
-    { x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
-    { x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
-    { x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
-    { x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
-    { x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
-    { x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
-    { x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
-    { x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
-] )
-
-function addItem(){
-
-  layout.push({
-    x: (layout.length ) % (colNum.value || 12),
-    y: (3), // puts it at the bottom
-    w: 2,
-    h: 2,
-    i: `${window.prompt('Enter the name of the Course', `Item ${index++}`)}\n${window.prompt('Enter the location of the Course', ``)}` ,
-    static: false,
-    moved: false
-  })
-}
-
-function removeItem(id){
-  const index = layout.findIndex(item => item.i === id)
-  if (index > -1) {
-    layout.splice(index, 1)
-  }
-}
-
-function anchor(id){
-  const index = layout.findIndex(item => item.i === id)
-  if (index > -1) {
-    layout[index].static = !layout[index].static
-  }
-}
-
-function dispLayout(){
-  display = !display
-  console.log(JSON.stringify(layout))
-}
-</script> -->
 
 <template>
   <div class="dropdown">
@@ -199,8 +185,8 @@ function dispLayout(){
   <button @click="getDepartment">User Dept</button>
   <GridLayout 
     v-model:layout="layout" 
-    :row-height="30"
-    :col-num="14"
+    :row-height="50"
+    :col-num="colNum"
     :vertical-compact="false"
     prevent-collision>
     <template #item="{ item }">
@@ -212,6 +198,15 @@ function dispLayout(){
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
 
 .vgl-layout {
   background-color: #eee;
@@ -238,10 +233,10 @@ function dispLayout(){
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   position: absolute;
   inset: 0;
-  width: 100%;
+  width: 75%;
   height: 100%;
   margin: auto;
-  font-size: calc(2vmin);
+  font-size: calc(1.5vmin);
   text-align: center;
 }
 
@@ -256,7 +251,7 @@ function dispLayout(){
     linear-gradient(to right,black 1px,transparent 1px),
     linear-gradient(to bottom, black 1px, transparent 1px);
   background-repeat: repeat;
-  background-size: calc(calc(100% - 5px) / 7) 40px;
+  background-size: calc(calc(100% - 4px) / 10) 60px;
 }
 
 button {
