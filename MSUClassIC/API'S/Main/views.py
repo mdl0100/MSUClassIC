@@ -7,7 +7,14 @@ from django.contrib.auth.models import User
 from . import serializers
 from . import models
 
+
 class DepartmentView(APIView):
+    """
+    GET - Get all departments
+    POST - Create a new department
+    """
+
+    # Check for authentication token
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
@@ -24,6 +31,11 @@ class DepartmentView(APIView):
 
 
 class DepartmentScheduleView(APIView):
+    """
+    GET - Get department schedule data (by department_id)
+    """
+
+    # Check for authentication token
     # permission_classes = [IsAuthenticated]
 
     def get(self, request, department_id, format=None):
@@ -42,6 +54,11 @@ class DepartmentScheduleView(APIView):
 
 
 class AxisView(APIView):
+    """
+    POST - Create a new axis label (professor name or time slot)
+    """
+
+    # Check for authentication token
     # permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
@@ -53,6 +70,11 @@ class AxisView(APIView):
 
 
 class ScheduleView(APIView):
+    """
+    POST - Create a new schedule data
+    """
+
+    # Check for authentication token
     # permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
@@ -64,6 +86,11 @@ class ScheduleView(APIView):
 
 
 class ScheduleDeleteView(APIView):
+    """ "
+    DELETE - Delete a schedule data
+    """
+
+    # Check for authentication token
     # permission_classes = [IsAuthenticated]
 
     def delete(self, request, schedule_id, format=None):
