@@ -10,12 +10,7 @@
 3. Schedule
    - `POST` /api/schedule
 
-## TODO
 
-- [x] Get All Schedules by Department
-- [ ] Edit Schedule
-- [x] Delete Schedule
-- [ ] Authentification with Firebase
 
 ## Examples
 
