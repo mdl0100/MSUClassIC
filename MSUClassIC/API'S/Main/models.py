@@ -2,6 +2,10 @@ from django.db import models
 
 
 class DepartmentModel(models.Model):
+    """
+    For registration purpose
+    """
+
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -9,6 +13,12 @@ class DepartmentModel(models.Model):
 
 
 class AxisModel(models.Model):
+    """
+    For axis labels,
+    x-axis: Professor names
+    y-axis: Time slots
+    """
+
     department = models.ForeignKey(DepartmentModel, on_delete=models.CASCADE)
     x = models.IntegerField()
     y = models.IntegerField()
@@ -23,6 +33,10 @@ class AxisModel(models.Model):
 
 
 class ScheduleModel(models.Model):
+    """
+    For schedule data
+    """
+
     department = models.ForeignKey(DepartmentModel, on_delete=models.CASCADE)
     x = models.IntegerField()
     y = models.IntegerField()
