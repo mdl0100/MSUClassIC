@@ -4,6 +4,10 @@ from . import models
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
+    """
+    Used to serialize the Department data (name only)
+    """
+
     class Meta:
         model = models.DepartmentModel
         fields = (
@@ -13,6 +17,10 @@ class DepartmentSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
     def create(self, validated_data):
+        """
+        Create a new department if it does not exist
+        Otherwise, get the existing department
+        """
         department, created = models.DepartmentModel.objects.get_or_create(
             name=validated_data["name"]
         )
@@ -20,6 +28,10 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class AxisSerializer(serializers.ModelSerializer):
+    """
+    Used to serialize the Axis data
+    """
+
     department = DepartmentSerializer()
     x = serializers.IntegerField()
     y = serializers.IntegerField()
@@ -45,10 +57,23 @@ class AxisSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
     def create(self, validated_data):
+        """
+        Get the department data from API request
+        """
         department_data = validated_data.pop("department")
+
+        """
+        Create a new department if it does not exist
+        Otherwise, get the existing department
+        """
         department, created = models.DepartmentModel.objects.get_or_create(
             name=department_data["name"]
         )
+
+        """
+        Create a new axis label if it does not exist
+        Otherwise, get the existing axis label
+        """
         axis, created = models.AxisModel.objects.get_or_create(
             department=department,
             x=validated_data["x"],
@@ -63,6 +88,10 @@ class AxisSerializer(serializers.ModelSerializer):
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
+    """
+    Used to serialize the Schedule data
+    """
+
     department = DepartmentSerializer()
     x = serializers.IntegerField()
     y = serializers.IntegerField()
@@ -88,10 +117,23 @@ class ScheduleSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
     def create(self, validated_data):
+        """
+        Get the department data from API request
+        """
         department_data = validated_data.pop("department")
+
+        """
+        Create a new department if it does not exist
+        Otherwise, get the existing department
+        """
         department, created = models.DepartmentModel.objects.get_or_create(
             name=department_data["name"]
         )
+
+        """
+        Create a new schedule if it does not exist
+        Otherwise, get the existing schedule
+        """
         schedule, created = models.ScheduleModel.objects.get_or_create(
             department=department,
             x=validated_data["x"],
