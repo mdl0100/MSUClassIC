@@ -6,6 +6,8 @@ import { useStore } from 'vuex';
 const store = useStore();
 
 
+
+
 // Reactive state for grid layout and column number
 const example = reactive([
 { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
@@ -81,10 +83,12 @@ const real = reactive([{'x': 1, 'y': 0, 'w': 1, 'h': 1, 'i': 'Colmenares - Diaz'
  {'x': 0, 'y': 21, 'w': 1, 'h': 1, 'i': 'MATH 1634', 'static': true},
  {'x': 3, 'y': 21, 'w': 1, 'h': 1, 'i': 'MF 11:00 BO 109.0', 'static': true},
  {'x': 0, 'y': 22, 'w': 1, 'h': 1, 'i': 'MATH 3533', 'static': true},
-//  {'x': 3, 'y': 22, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 109.0', 'static': true}
 ])
 
- const layout = real
+const layout = computed(() => {
+  return selected.value ==='2' ? real :example;
+});
+
 
 // Index used for item names
 let index = ref(0);
@@ -92,21 +96,23 @@ let index = ref(0);
 // Reactive state for selected dropdown value
 const selected = ref('');
 
+
+
 // Computed property for view description
 const viewDescription = computed(() => {
   switch (selected.value) {
-    case '1': return 'Faculty vs Time';
-    case '2': return 'Faculty vs Course';
-    case '3': return 'Course vs Time';
-    case '4': return 'Course vs Location';
-    default: return 'Please select a view';
+    case '1': return 1;
+    case '2': return 2;
+    case '3': return 3;
+    case '4': return 4;
+    default: return 0;
   }
 });
 
 // Methods
 const colNum = computed(() => {
   let maxCol = 0;
-  layout.forEach(item => {
+  layout.value.forEach(item => {
     if (item.y === 0) { // Consider only items in the first row
       maxCol = Math.max(maxCol, item.x + item.w);
     }
@@ -117,7 +123,7 @@ const colNum = computed(() => {
 // Calculate the number of rows required
 const rowNum = computed(() => {
   let maxRow = 0;
-  layout.forEach(item => {
+  layout.value.forEach(item => {
     if (item.x === 0) { // Consider only items in the first column
       maxRow = Math.max(maxRow, item.y + item.h);
     }
@@ -129,7 +135,7 @@ function addItem() {
   const itemName = window.prompt('Enter the name of the Course', `Item ${index.value++}`);
   const itemLocation = window.prompt('Enter the location of the Course', '');
   layout.push({
-    x: (layout.length) % (colNum.value || 12),
+    x: (layout.value.length) % (colNum.value || 12),
     y: 3, // places it at the bottom
     w: 2,
     h: 2,
@@ -140,14 +146,14 @@ function addItem() {
 }
 
 function removeItem(itemName) {
-  const index = layout.findIndex(item => item.i === itemName);
+  const index = layout.value.findIndex(item => item.i === itemName);
   if (index !== -1) {
     layout.splice(index, 1);
   }
 }
 
 function anchor(itemName) {
-  const item = layout.find(item => item.i === itemName);
+  const item = layout.value.find(item => item.i === itemName);
   if (item) {
     item.static = !item.static;
   }
