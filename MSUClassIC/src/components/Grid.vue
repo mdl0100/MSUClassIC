@@ -127,7 +127,7 @@ const backgroundSize = computed(() => {
     case '3': return 'calc(calc(100% - 4px) / 10) 60px';
     case '4': return 'calc(calc(100% - 4px) / 10) 60px';
     case '5': return 'calc(calc(100% - 4px) / 10) 60px';
-    default: return 'calc(calc(100% - 4px) /7) 60px'; // Default or initial value
+    default: return 'calc(calc(100% - 4px) /8) 60px'; // Default or initial value
   }
 });
 
@@ -181,7 +181,8 @@ function addItem() {
     h: 2,
     i: `${itemName}\n${itemLocation}`,
     static: false,
-    moved: false
+    moved: false,
+    is_dept: true,
   });
 }
 
@@ -236,7 +237,7 @@ function getDepartment() {
     prevent-collision>
     <template #item="{ item }">
         <span class="text">{{ item.i }}</span>
-        <span class="remove" @click="removeItem(item.i)">-</span>
+        <span v-if="item.is_dept" class="remove" @click="removeItem(item.i)">-</span>
         <span v-if="item.is_dept" class="anchor" @click="anchor(item.i)">⚓</span>
     </template>
   </GridLayout>
