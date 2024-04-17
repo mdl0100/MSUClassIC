@@ -9,84 +9,126 @@ const store = useStore();
 
 
 // Reactive state for grid layout and column number
-const example = reactive([
-{ x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
-{ x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
-{ x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
-{ x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
-{ x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
-{ x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
-{ x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
-{ x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
-{ x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
-{ x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
-{ x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
-{ x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
-{ x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
-{ x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
-{ x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
-{ x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
-{ x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
-] )
-const real = reactive([{'x': 1, 'y': 0, 'w': 1, 'h': 1, 'i': 'Colmenares - Diaz', 'static': true},
- {'x': 2, 'y': 0, 'w': 1, 'h': 1, 'i': 'Griffin', 'static': true},
- {'x': 3, 'y': 0, 'w': 1, 'h': 1, 'i': 'Hood', 'static': true},
- {'x': 4, 'y': 0, 'w': 1, 'h': 1, 'i': 'Johnson', 'static': true},
- {'x': 5, 'y': 0, 'w': 1, 'h': 1, 'i': 'Morgan', 'static': true},
- {'x': 6, 'y': 0, 'w': 1, 'h': 1, 'i': 'Passos', 'static': true},
- {'x': 7, 'y': 0, 'w': 1, 'h': 1, 'i': 'Roychoudhuri', 'static': true},
- {'x': 8, 'y': 0, 'w': 1, 'h': 1, 'i': 'Smith', 'static': true},
- {'x': 9, 'y': 0, 'w': 1, 'h': 1, 'i': 'Stringfellow', 'static': true},
- {'x': 0, 'y': 1, 'w': 1, 'h': 1, 'i': 'CMPS 1023', 'static': true},
- {'x': 4, 'y': 1, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 103.0', 'static': true},
- {'x': 0, 'y': 2, 'w': 1, 'h': 1, 'i': 'CMPS 1044', 'static': true},
- {'x': 5, 'y': 2, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 207.0', 'static': true},
- {'x': 7, 'y': 2, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 109.0', 'static': true},
- {'x': 0, 'y': 3, 'w': 1, 'h': 1, 'i': 'CMPS 1063', 'static': true},
- {'x': 1, 'y': 3, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 103.0', 'static': true},
- {'x': 9, 'y': 3, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 4, 'w': 1, 'h': 1, 'i': 'CMPS 2084', 'static': true},
- {'x': 6, 'y': 4, 'w': 1, 'h': 1, 'i': 'TR 12:30 BO 320.0', 'static': true},
- {'x': 0, 'y': 5, 'w': 1, 'h': 1, 'i': 'CMPS 2143', 'static': true},
- {'x': 9, 'y': 5, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 6, 'w': 1, 'h': 1, 'i': 'CMPS 2433', 'static': true},
- {'x': 9, 'y': 6, 'w': 1, 'h': 1, 'i': 'MWF 11:00 BO 209.0', 'static': true},
- {'x': 0, 'y': 7, 'w': 1, 'h': 1, 'i': 'CMPS 3013', 'static': true},
- {'x': 1, 'y': 7, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 213.0', 'static': true},
- {'x': 0, 'y': 8, 'w': 1, 'h': 1, 'i': 'CMPS 3533', 'static': true},
- {'x': 3, 'y': 8, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 109.0', 'static': true},
- {'x': 0, 'y': 9, 'w': 1, 'h': 1, 'i': 'CMPS 4103', 'static': true},
- {'x': 6, 'y': 9, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 10, 'w': 1, 'h': 1, 'i': 'CMPS 4123', 'static': true},
- {'x': 7, 'y': 10, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 109.0', 'static': true},
- {'x': 0, 'y': 11, 'w': 1, 'h': 1, 'i': 'CMPS 4143', 'static': true},
- {'x': 2, 'y': 11, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 320.0', 'static': true},
- {'x': 0, 'y': 12, 'w': 1, 'h': 1, 'i': 'CMPS 4453', 'static': true},
- {'x': 6, 'y': 12, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 13, 'w': 1, 'h': 1, 'i': 'CMPS 4883', 'static': true},
- {'x': 2, 'y': 13, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 103.0', 'static': true},
- {'x': 0, 'y': 14, 'w': 1, 'h': 1, 'i': 'CMPS 5113', 'static': true},
- {'x': 1, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 209.0', 'static': true},
- {'x': 4, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 320.0', 'static': true},
- {'x': 0, 'y': 15, 'w': 1, 'h': 1, 'i': 'CMPS 5133', 'static': true},
- {'x': 7, 'y': 15, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 16, 'w': 1, 'h': 1, 'i': 'CMPS 5143', 'static': true},
- {'x': 2, 'y': 16, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 17, 'w': 1, 'h': 1, 'i': 'CMPS 5363', 'static': true},
- {'x': 8, 'y': 17, 'w': 1, 'h': 1, 'i': 'TR 15:30 BO 320.0', 'static': true},
- {'x': 0, 'y': 18, 'w': 1, 'h': 1, 'i': 'CMPS 5443', 'static': true},
- {'x': 4, 'y': 18, 'w': 1, 'h': 1, 'i': 'W 11:00 BO 320.0', 'static': true},
- {'x': 0, 'y': 19, 'w': 1, 'h': 1, 'i': 'MATH 233', 'static': true},
- {'x': 3, 'y': 19, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 101.0', 'static': true},
- {'x': 0, 'y': 20, 'w': 1, 'h': 1, 'i': 'MATH 1233', 'static': true},
- {'x': 3, 'y': 20, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 101.0', 'static': true},
- {'x': 0, 'y': 21, 'w': 1, 'h': 1, 'i': 'MATH 1634', 'static': true},
- {'x': 3, 'y': 21, 'w': 1, 'h': 1, 'i': 'MF 11:00 BO 109.0', 'static': true},
- {'x': 0, 'y': 22, 'w': 1, 'h': 1, 'i': 'MATH 3533', 'static': true},
-])
+// const example = reactive([
+// { x: 2, y: 0, w: 2, h: 1, i: 'Prof 1', static: true },
+// { x: 4, y: 0, w: 2, h: 1, i: 'Prof 2', static: true },
+// { x: 6, y: 0, w: 2, h: 1, i: 'Prof 3', static: true },
+// { x: 8, y: 0, w: 2, h: 1, i: 'Prof 4', static: true },
+// { x: 10, y: 0, w: 2, h: 1, i: 'Prof 5', static: true },
+// { x: 12, y: 0, w: 2, h: 1, i: 'Prof 6', static: true },
+// { x: 0, y: 1, w: 2, h: 2, i: '8am', static: true },
+// { x: 0, y: 3, w: 2, h: 2, i: '9am', static: true },
+// { x: 0, y: 5, w: 2, h: 2, i: '10am', static: true },
+// { x: 0, y: 7, w: 2, h: 2, i: '11am', static: true },
+// { x: 0, y: 9, w: 2, h: 2, i: '12am', static: true },
+// { x: 0, y: 11, w: 2, h: 2, i: '1pm', static: true },
+// { x: 0, y: 13, w: 2, h: 2, i: '2pm', static: true },
+// { x: 0, y: 15, w: 2, h: 2, i: '3pm', static: true },
+// { x: 0, y: 17, w: 2, h: 2, i: '4pm', static: true },
+// { x: 0, y: 19, w: 2, h: 2, i: '5pm', static: true },
+// { x: 6, y: 8, w: 2, h: 2, i: 'Class1', static: false },
+// ] )
+// const real = reactive([{'x': 1, 'y': 0, 'w': 1, 'h': 1, 'i': 'Colmenares - Diaz', 'static': true},
+//  {'x': 2, 'y': 0, 'w': 1, 'h': 1, 'i': 'Griffin', 'static': true},
+//  {'x': 3, 'y': 0, 'w': 1, 'h': 1, 'i': 'Hood', 'static': true},
+//  {'x': 4, 'y': 0, 'w': 1, 'h': 1, 'i': 'Johnson', 'static': true},
+//  {'x': 5, 'y': 0, 'w': 1, 'h': 1, 'i': 'Morgan', 'static': true},
+//  {'x': 6, 'y': 0, 'w': 1, 'h': 1, 'i': 'Passos', 'static': true},
+//  {'x': 7, 'y': 0, 'w': 1, 'h': 1, 'i': 'Roychoudhuri', 'static': true},
+//  {'x': 8, 'y': 0, 'w': 1, 'h': 1, 'i': 'Smith', 'static': true},
+//  {'x': 9, 'y': 0, 'w': 1, 'h': 1, 'i': 'Stringfellow', 'static': true},
+//  {'x': 0, 'y': 1, 'w': 1, 'h': 1, 'i': 'CMPS 1023', 'static': true},
+//  {'x': 4, 'y': 1, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 103.0', 'static': true},
+//  {'x': 0, 'y': 2, 'w': 1, 'h': 1, 'i': 'CMPS 1044', 'static': true},
+//  {'x': 5, 'y': 2, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 207.0', 'static': true},
+//  {'x': 7, 'y': 2, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 109.0', 'static': true},
+//  {'x': 0, 'y': 3, 'w': 1, 'h': 1, 'i': 'CMPS 1063', 'static': true},
+//  {'x': 1, 'y': 3, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 103.0', 'static': true},
+//  {'x': 9, 'y': 3, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 4, 'w': 1, 'h': 1, 'i': 'CMPS 2084', 'static': true},
+//  {'x': 6, 'y': 4, 'w': 1, 'h': 1, 'i': 'TR 12:30 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 5, 'w': 1, 'h': 1, 'i': 'CMPS 2143', 'static': true},
+//  {'x': 9, 'y': 5, 'w': 1, 'h': 1, 'i': 'TR 11:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 6, 'w': 1, 'h': 1, 'i': 'CMPS 2433', 'static': true},
+//  {'x': 9, 'y': 6, 'w': 1, 'h': 1, 'i': 'MWF 11:00 BO 209.0', 'static': true},
+//  {'x': 0, 'y': 7, 'w': 1, 'h': 1, 'i': 'CMPS 3013', 'static': true},
+//  {'x': 1, 'y': 7, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 213.0', 'static': true},
+//  {'x': 0, 'y': 8, 'w': 1, 'h': 1, 'i': 'CMPS 3533', 'static': true},
+//  {'x': 3, 'y': 8, 'w': 1, 'h': 1, 'i': 'MWF 9:00 BO 109.0', 'static': true},
+//  {'x': 0, 'y': 9, 'w': 1, 'h': 1, 'i': 'CMPS 4103', 'static': true},
+//  {'x': 6, 'y': 9, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 10, 'w': 1, 'h': 1, 'i': 'CMPS 4123', 'static': true},
+//  {'x': 7, 'y': 10, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 109.0', 'static': true},
+//  {'x': 0, 'y': 11, 'w': 1, 'h': 1, 'i': 'CMPS 4143', 'static': true},
+//  {'x': 2, 'y': 11, 'w': 1, 'h': 1, 'i': 'TR 9:30 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 12, 'w': 1, 'h': 1, 'i': 'CMPS 4453', 'static': true},
+//  {'x': 6, 'y': 12, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 13, 'w': 1, 'h': 1, 'i': 'CMPS 4883', 'static': true},
+//  {'x': 2, 'y': 13, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 103.0', 'static': true},
+//  {'x': 0, 'y': 14, 'w': 1, 'h': 1, 'i': 'CMPS 5113', 'static': true},
+//  {'x': 1, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 209.0', 'static': true},
+//  {'x': 4, 'y': 14, 'w': 1, 'h': 1, 'i': 'MW 15:30 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 15, 'w': 1, 'h': 1, 'i': 'CMPS 5133', 'static': true},
+//  {'x': 7, 'y': 15, 'w': 1, 'h': 1, 'i': 'MW 14:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 16, 'w': 1, 'h': 1, 'i': 'CMPS 5143', 'static': true},
+//  {'x': 2, 'y': 16, 'w': 1, 'h': 1, 'i': 'TR 14:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 17, 'w': 1, 'h': 1, 'i': 'CMPS 5363', 'static': true},
+//  {'x': 8, 'y': 17, 'w': 1, 'h': 1, 'i': 'TR 15:30 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 18, 'w': 1, 'h': 1, 'i': 'CMPS 5443', 'static': true},
+//  {'x': 4, 'y': 18, 'w': 1, 'h': 1, 'i': 'W 11:00 BO 320.0', 'static': true},
+//  {'x': 0, 'y': 19, 'w': 1, 'h': 1, 'i': 'MATH 233', 'static': true},
+//  {'x': 3, 'y': 19, 'w': 1, 'h': 1, 'i': 'TR 8:00 BO 101.0', 'static': true},
+//  {'x': 0, 'y': 20, 'w': 1, 'h': 1, 'i': 'MATH 1233', 'static': true},
+//  {'x': 3, 'y': 20, 'w': 1, 'h': 1, 'i': 'MWF 8:00 BO 101.0', 'static': true},
+//  {'x': 0, 'y': 21, 'w': 1, 'h': 1, 'i': 'MATH 1634', 'static': true},
+//  {'x': 3, 'y': 21, 'w': 1, 'h': 1, 'i': 'MF 11:00 BO 109.0', 'static': true},
+//  {'x': 0, 'y': 22, 'w': 1, 'h': 1, 'i': 'MATH 3533', 'static': true},
+// ])
 
 const layout = computed(() => {
-  return selected.value ==='2' ? real :example;
+  switch (selected.value) {
+    case '1': return reactive(store.getters.get_location_time_MWF);
+    case '2': return reactive(store.getters.get_faculty_course);
+    case '3': return reactive(store.getters.get_faculty_MWF);
+    case '4': return reactive(store.getters.get_faculty_TR);
+    case '5': return reactive(store.getters.get_location_time_TR);
+    default: return reactive(store.getters.getExample);
+  }
+});
+
+function dispLayout() {
+  console.log(layout.value);
+  switch (selected.value) {
+    case '1':
+      store.commit('updateExample', layout.value);
+      break;
+    case '2':
+      store.commit('updateFacultyCourse', layout.value);
+      break;
+    case '3':
+      store.commit('updateFacultyMWF', layout.value);
+      break;
+    case '4':
+      store.commit('updateFacultyTR', layout.value);
+      break;
+    case '5':
+      store.commit('updateFacultyTR', layout.value);
+      break;
+    default:
+      store.commit('updateExample', layout.value);
+      break; 
+  }
+}
+
+const backgroundSize = computed(() => {
+  switch (selected.value) {
+    case '1': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '2': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '3': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '4': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '5': return 'calc(calc(100% - 4px) / 10) 60px';
+    default: return 'calc(calc(100% - 4px) /7) 60px'; // Default or initial value
+  }
 });
 
 
@@ -95,8 +137,6 @@ let index = ref(0);
 
 // Reactive state for selected dropdown value
 const selected = ref('');
-
-
 
 // Computed property for view description
 const viewDescription = computed(() => {
@@ -134,7 +174,7 @@ const rowNum = computed(() => {
 function addItem() {
   const itemName = window.prompt('Enter the name of the Course', `Item ${index.value++}`);
   const itemLocation = window.prompt('Enter the location of the Course', '');
-  layout.push({
+  layout.value.push({
     x: (layout.value.length) % (colNum.value || 12),
     y: 3, // places it at the bottom
     w: 2,
@@ -148,7 +188,7 @@ function addItem() {
 function removeItem(itemName) {
   const index = layout.value.findIndex(item => item.i === itemName);
   if (index !== -1) {
-    layout.splice(index, 1);
+    layout.value.splice(index, 1);
   }
 }
 
@@ -159,10 +199,6 @@ function anchor(itemName) {
   }
 }
 
-function dispLayout() {
-  console.log(JSON.stringify(layout));
-  store.commit('updateLayout', layout);
-}
 
 function getEmail() {
   console.log(store.getters.userEmail);
@@ -171,6 +207,7 @@ function getEmail() {
 function getDepartment() {
   console.log(store.getters.userDepartment);
 }
+
 </script>
 
 <template>
@@ -178,17 +215,19 @@ function getDepartment() {
     <label for="views">Views:</label>
     <select id="views" name="views" v-model="selected">
       <option disabled value="">Please select one</option>
-      <option value="1">Faculty vs Time</option>
+      <option value="1">Course vs Location (1st Floor, MWF)</option>
+      <option value="5">Course vs Location (1st Floor, TR)</option>
       <option value="2">Faculty vs Course</option>
-      <option value="3">Course vs Time</option>
-      <option value="4">Course vs Location</option>
+      <option value="3">Faculty vs Time (MWF)</option>
+      <option value="4">Faculty vs Time (TR)</option>
     </select>
   </div>
   <h3>This is the View: {{ viewDescription }}</h3>
   <button @click="addItem">Add Item</button>
-  <button @click="dispLayout">Display Layout</button>
+  <button @click="dispLayout">Save</button>
   <button @click="getEmail">User Email</button>
   <button @click="getDepartment">User Dept</button>
+  <div class="vgl-layout" :style="{ '--background-size': backgroundSize }">
   <GridLayout 
     v-model:layout="layout" 
     :row-height="50"
@@ -196,11 +235,12 @@ function getDepartment() {
     :vertical-compact="false"
     prevent-collision>
     <template #item="{ item }">
-      <span class="text">{{ item.i }}</span>
-      <span class="remove" @click="removeItem(item.i)">-</span>
-      <span class="anchor" @click="anchor(item.i)">⚓</span>
+        <span class="text">{{ item.i }}</span>
+        <span class="remove" @click="removeItem(item.i)">-</span>
+        <span v-if="item.is_dept" class="anchor" @click="anchor(item.i)">⚓</span>
     </template>
   </GridLayout>
+  </div>
 </template>
 
 <style scoped>
@@ -226,6 +266,7 @@ function getDepartment() {
   border-radius: 5px;
   color: white;
 }
+
 
 :deep(.vgl-item--resizing) {
   opacity: 90%;
@@ -257,7 +298,7 @@ function getDepartment() {
     linear-gradient(to right,black 1px,transparent 1px),
     linear-gradient(to bottom, black 1px, transparent 1px);
   background-repeat: repeat;
-  background-size: calc(calc(100% - 4px) / 10) 60px;
+  background-size: var(--background-size);
 }
 
 button {

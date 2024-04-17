@@ -88,9 +88,9 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
-@media (min-width: 800px) {
+@media (min-width: 2080px) {
   header {
-    display: flex;
+    display: flexbox;
     align-items: center;
   } 
 
