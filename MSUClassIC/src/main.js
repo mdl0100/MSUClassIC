@@ -3,6 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue';
 import App from './App.vue';
 import store from './store';  // Ensure the path is correct
+import VuexPersistence from 'vuex-persist';
 
 import router from './router'
 

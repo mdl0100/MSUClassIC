@@ -4,9 +4,7 @@ import { GridLayout, GridItem } from 'grid-layout-plus';
 import { useStore } from 'vuex';
 
 const store = useStore();
-
-
-
+const savemessage = ref('');
 
 // Reactive state for grid layout and column number
 // const example = reactive([
@@ -92,41 +90,68 @@ const layout = computed(() => {
     case '3': return reactive(store.getters.get_faculty_MWF);
     case '4': return reactive(store.getters.get_faculty_TR);
     case '5': return reactive(store.getters.get_location_time_TR);
+    case '6': return reactive(store.getters.get_location_time_MWF_2nd)
+    case '7': return reactive(store.getters.get_location_time_TR_2nd)
+    case '8': return reactive(store.getters.get_location_time_MWF_3rd)
+    case '9': return reactive(store.getters.get_location_time_TR_3rd)
     default: return reactive(store.getters.getExample);
   }
 });
 
 function dispLayout() {
-  console.log(layout.value);
   switch (selected.value) {
     case '1':
-      store.commit('updateExample', layout.value);
+      store.commit('update_location_time_MWF', layout.value);
       break;
     case '2':
-      store.commit('updateFacultyCourse', layout.value);
+      store.commit('update_faculty_course', layout.value);
       break;
     case '3':
-      store.commit('updateFacultyMWF', layout.value);
+      store.commit('update_faculty_MWF', layout.value);
       break;
     case '4':
-      store.commit('updateFacultyTR', layout.value);
+      store.commit('update_faculty_TR', layout.value);
       break;
     case '5':
-      store.commit('updateFacultyTR', layout.value);
+      store.commit('update_location_time_TR', layout.value);
+      break;
+    case '6':
+      store.commit('update_location_time_MWF_2nd', layout.value);
+      break;
+    case '7':
+      store.commit('update_location_time_TR_2nd', layout.value);
+      break;
+    case '8':
+      store.commit('update_location_time_MWF_3rd', layout.value);
+      break;
+    case '9':
+      store.commit('update_location_time_TR_3rd', layout.value);
       break;
     default:
       store.commit('updateExample', layout.value);
       break; 
   }
+  const currenState = store.state;
+  localStorage.setItem('vuexState', JSON.stringify(currenState));
+  savemessage.value = 'Layout saved successfully.';
+  setTimeout(() => {
+    savemessage.value = '';
+  }, 3000);
 }
 
 const backgroundSize = computed(() => {
+
+  
   switch (selected.value) {
     case '1': return 'calc(calc(100% - 4px) / 10) 60px';
     case '2': return 'calc(calc(100% - 4px) / 10) 60px';
     case '3': return 'calc(calc(100% - 4px) / 10) 60px';
     case '4': return 'calc(calc(100% - 4px) / 10) 60px';
     case '5': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '6': return 'calc(calc(100% - 4px) / 9) 60px';
+    case '7': return 'calc(calc(100% - 4px) / 10) 60px';
+    case '8': return 'calc(calc(100% - 4px) / 8) 60px';
+    case '9': return 'calc(calc(100% - 4px) / 7) 60px';
     default: return 'calc(calc(100% - 4px) /8) 60px'; // Default or initial value
   }
 });
@@ -172,14 +197,13 @@ const rowNum = computed(() => {
 });
 
 function addItem() {
-  const itemName = window.prompt('Enter the name of the Course', `Item ${index.value++}`);
-  const itemLocation = window.prompt('Enter the location of the Course', '');
+  const itemName = window.prompt('What information would you like to add?', ``);
   layout.value.push({
     x: (layout.value.length) % (colNum.value || 12),
-    y: 3, // places it at the bottom
-    w: 2,
-    h: 2,
-    i: `${itemName}\n${itemLocation}`,
+    y: 3, 
+    w: 1,
+    h: 1,
+    i: `${itemName}`,
     static: false,
     moved: false,
     is_dept: true,
@@ -218,16 +242,25 @@ function getDepartment() {
       <option disabled value="">Please select one</option>
       <option value="1">Course vs Location (1st Floor, MWF)</option>
       <option value="5">Course vs Location (1st Floor, TR)</option>
+      <option value="6">Course vs Location (2nd Floor, MWF)</option>
+      <option value="7">Course vs Location (2nd Floor, TR)</option>
+      <option value="8">Course vs Location (3rd Floor, MWF)</option>
+      <option value="9">Course vs Location (3rd Floor, TR)</option>
       <option value="2">Faculty vs Course</option>
       <option value="3">Faculty vs Time (MWF)</option>
       <option value="4">Faculty vs Time (TR)</option>
     </select>
   </div>
-  <h3>This is the View: {{ viewDescription }}</h3>
+  <!-- <h3>This is the View: {{ viewDescription }}</h3> -->
+  <div class="save-container">
   <button @click="addItem">Add Item</button>
+  
   <button @click="dispLayout">Save</button>
-  <button @click="getEmail">User Email</button>
-  <button @click="getDepartment">User Dept</button>
+  <p v-if="savemessage" class="save-message">{{ savemessage }}</p>
+  </div>
+  
+  <!-- <button @click="getEmail">User Email</button>
+  <button @click="getDepartment">User Dept</button> -->
   <div class="vgl-layout" :style="{ '--background-size': backgroundSize }">
   <GridLayout 
     v-model:layout="layout" 
@@ -319,6 +352,9 @@ button {
   right: 6px;
   cursor: pointer;
   font-size: xx-small;
+
+  color: transparent;
+  text-shadow: 0 0 0 black
 }
 
 label {
@@ -337,4 +373,16 @@ select {
   align-items: center;
 
 }
+
+.save-container {
+  display: flexbox;
+  align-items: center; /* Aligns items vertically in the center */
+  gap: 10px; /* Space between the button and the message */
+}
+
+.save-message {
+  margin: 0; /* Removes default paragraph margins */
+  color: #02bd7e; /* Optional: changes the color of the save message */
+}
+
 </style>

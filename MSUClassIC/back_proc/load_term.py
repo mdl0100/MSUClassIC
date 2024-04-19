@@ -314,7 +314,7 @@ def layout_location_time_MWF():
             if (course['DAYS']) and (any(day in course['DAYS'] for day in ['M', 'W', 'F'])):
                 if course['ROOM'] and course['BLDG'] == 'BO':
                     course['ROOM'] = int(course['ROOM'])  # Convert room to integer for sorting
-                    if course['ROOM'] in range(100, 200):  # Example range for room numbers
+                    if course['ROOM'] in range(300, 400):  # Example range for room numbers
                         
                         rooms.add(int(course['ROOM']))
 
@@ -360,7 +360,7 @@ def layout_location_time_TR():
                 if course['BLDG'] == 'BO':
                     if course['ROOM']:
                         course['ROOM'] = int(course['ROOM'])  # Convert room to integer for sorting
-                        if course['ROOM'] in range(100, 200):  # Example range for room numbers
+                        if course['ROOM'] in range(300, 400):  # Example range for room numbers
                             
                             rooms.add(int(course['ROOM']))
 
@@ -396,4 +396,4 @@ def layout_location_time_TR():
     print(layout)
 
 if __name__ == '__main__':
-    layout_location_time_MWF()
+    layout_location_time_TR()

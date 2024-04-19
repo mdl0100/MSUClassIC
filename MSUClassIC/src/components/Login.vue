@@ -154,7 +154,7 @@ button:hover {
 .error {
   color: red;
   text-align: center;
-  margin-top: 10px;  /* Added margin above the error message */
+  margin-top: 10px;  
 }
 </style>
 
