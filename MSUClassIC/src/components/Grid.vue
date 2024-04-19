@@ -139,6 +139,11 @@ function dispLayout() {
   }, 3000);
 }
 
+function clearStorage() {
+  localStorage.removeItem('vuexState');
+  location.reload();
+}
+
 const backgroundSize = computed(() => {
 
   
@@ -224,7 +229,6 @@ function anchor(itemName) {
   }
 }
 
-
 function getEmail() {
   console.log(store.getters.userEmail);
 }
@@ -239,14 +243,15 @@ function getDepartment() {
   <div class="dropdown">
     <label for="views">Views:</label>
     <select id="views" name="views" v-model="selected">
+      
       <option disabled value="">Please select one</option>
-      <option value="1">Course vs Location (1st Floor, MWF)</option>
-      <option value="5">Course vs Location (1st Floor, TR)</option>
-      <option value="6">Course vs Location (2nd Floor, MWF)</option>
-      <option value="7">Course vs Location (2nd Floor, TR)</option>
-      <option value="8">Course vs Location (3rd Floor, MWF)</option>
-      <option value="9">Course vs Location (3rd Floor, TR)</option>
       <option value="2">Faculty vs Course</option>
+      <option value="1">Location vs Time (1st Floor, MWF)</option>
+      <option value="5">Location vs Time (1st Floor, TR)</option>
+      <option value="6">Location vs Time (2nd Floor, MWF)</option>
+      <option value="7">Location vs Time (2nd Floor, TR)</option>
+      <option value="8">Location vs Time (3rd Floor, MWF)</option>
+      <option value="9">Location vs Time (3rd Floor, TR)</option>
       <option value="3">Faculty vs Time (MWF)</option>
       <option value="4">Faculty vs Time (TR)</option>
     </select>
@@ -254,8 +259,8 @@ function getDepartment() {
   <!-- <h3>This is the View: {{ viewDescription }}</h3> -->
   <div class="save-container">
   <button @click="addItem">Add Item</button>
-  
   <button @click="dispLayout">Save</button>
+  <!-- <button @click="clearStorage">Refresh</button> -->
   <p v-if="savemessage" class="save-message">{{ savemessage }}</p>
   </div>
   
