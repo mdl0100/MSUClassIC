@@ -8,7 +8,7 @@ def read_database(db_path):
     
     # Define the SQL query to fetch required columns
     query = """
-    SELECT CRN, SUBJ, CRSE, DAYS, BEGN, ENDING, BLDG, ROOM, PRIMLAST, PRIMFIRST
+    SELECT CRN, SUBJ, CRSE, DAYS, BEGN, ENDING, BLDG, ROOM, PRIMLAST, PRIMFIRST, SEC
     FROM courses
     """
     
@@ -19,7 +19,7 @@ def read_database(db_path):
     rows = cursor.fetchall()
     
     # Convert rows to a list of dictionaries
-    columns = ["CRN", "SUBJ", "CRSE", "DAYS", "BEGN", "ENDING", "BLDG", "ROOM", "PRIMLAST", "PRIMFIRST"]
+    columns = ["CRN", "SUBJ", "CRSE", "DAYS", "BEGN", "ENDING", "BLDG", "ROOM", "PRIMLAST", "PRIMFIRST", "SEC"]
     result = []
     for row in rows:
         row_dict = {col: val for col, val in zip(columns, row)}
@@ -74,24 +74,14 @@ def get_professors_by_department(db_path, department=None):
 
 
 def fetch_professor_courses(db_path, last_name, first_name):
-    """
-    Fetches course details for a given professor from an SQLite database and organizes them into a structured dictionary.
-    
-    Args:
-        db_path (str): The path to the SQLite database file.
-        last_name (str): The last name of the professor.
-        first_name (str): The first name of the professor.
-    
-    Returns:
-        dict: A dictionary containing the professor's name and a list of their courses.
-    """
+ 
     # Connect to the SQLite database at the specified path
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
     # Prepare the SQL query to select courses based on the professor
     query = """
-    SELECT "SUBJ", "CRSE", "DAYS", "BEGN", "BLDG", "ROOM"
+    SELECT "SUBJ", "CRSE", "DAYS", "BEGN", "BLDG", "ROOM", "SEC"
     FROM courses
     WHERE "PRIMLAST" = ? AND "PRIMFIRST" = ?
     ORDER BY "SUBJ", "CRSE"
@@ -106,14 +96,15 @@ def fetch_professor_courses(db_path, last_name, first_name):
     # Convert rows to a list of dictionaries for better readability
     result = []
     for row in rows:
-        subj, crse, days, begn, bo, room = row
+        subj, crse, days, begn, bo, room, sec = row
         course_dict = {
             'SUBJ': subj,
             'CRSE': crse,
             'DAYS': days,
             'BEGN': begn,
             'BLDG': bo,
-            'ROOM': room
+            'ROOM': room,
+            'SEC' : sec
         }
         result.append(course_dict)
     
@@ -225,20 +216,20 @@ def layout_professors_courses_MWF():
     for entry in get_professors_by_department(db_path, "CMPS"):
         professor = fetch_professor_courses(db_path, entry['Last Name'], entry['First Name'])
         professors.append(professor)
-
+    
     # Collect all unique courses with time and location details
     unique_courses = {}
     for prof in professors:
         for course in prof['Courses']:
             if course['DAYS'] and any(day in course['DAYS'] for day in ['M', 'W', 'F']) and course['BEGN'] is not None:
-                # Format time to remove minutes and convert to integer if needed
                 try:
                     formatted_time = int(float(course['BEGN']))
                     time_key = f"{formatted_time}"
-                    details_key = f"{course['SUBJ']} {course['CRSE']} {course['BLDG']} {course['ROOM']}"
-                    unique_courses[time_key] = details_key
+                    details_key = f"{course['SUBJ']} {course['CRSE']}.{course['SEC']} {course['BLDG']} {int(course['ROOM'])}"
+                    if time_key not in unique_courses:
+                        unique_courses[time_key] = []
+                    unique_courses[time_key].append(details_key)
                 except ValueError:
-                    # Handle cases where BEGN might not be a valid float (e.g., corrupted data)
                     print(f"Skipping course with invalid time data: {course['BEGN']}")
 
     unique_times = sorted(unique_courses.keys(), key=lambda x: int(x))  # Sort times as integers
@@ -254,18 +245,22 @@ def layout_professors_courses_MWF():
         layout.append([{'x': 0, 'y': idx+1, 'w': 1, 'h': 1, 'i': time, 'static': True}])
         # Course details per professor
         for prof_idx, prof in enumerate(professors):
-            # Match based on time key, ignoring days and matching only on the hour
-            course_details = next((c for c in prof['Courses'] if c['BEGN'] is not None and int(float(c['BEGN'])) == int(time)), None)
+            courses_at_time = [c for c in prof['Courses'] if c['BEGN'] is not None and int(float(c['BEGN'])) == int(time)]
+            course_details = next((c for c in courses_at_time), None)
             if course_details:
-                details = unique_courses[time]
-                layout[-1].append({'x': prof_idx+1, 'y': idx+1, 'w': 1, 'h': 1, 'i': details, 'static': True, 'is_dept': True})
+                details_list = unique_courses[time]
+                # Ensure to find the exact course detail
+                details = next((d for d in details_list if f"{course_details['SUBJ']} {course_details['CRSE']}.{course_details['SEC']} {course_details['BLDG']} {int(course_details['ROOM'])}" == d), None)
+                if details:
+                    layout[-1].append({'x': prof_idx+1, 'y': idx+1, 'w': 1, 'h': 1, 'i': details, 'static': True, 'is_dept': True})
 
     # Print or return layout as needed
     output = []
     for row in layout:
-        for entry in row:
-            output.append(entry)
+        for idx in range(0, len(row)):
+            output.append(row[idx])
     print(output)
+
 
 
 
@@ -276,20 +271,20 @@ def layout_professors_courses_TR():
     for entry in get_professors_by_department(db_path, "CMPS"):
         professor = fetch_professor_courses(db_path, entry['Last Name'], entry['First Name'])
         professors.append(professor)
-
+    
     # Collect all unique courses with time and location details
     unique_courses = {}
     for prof in professors:
         for course in prof['Courses']:
             if course['DAYS'] and any(day in course['DAYS'] for day in ['T', 'R']) and course['BEGN'] is not None:
-                # Format time to remove minutes and convert to integer if needed
                 try:
                     formatted_time = int(float(course['BEGN']))
                     time_key = f"{formatted_time}"
-                    details_key = f"{course['SUBJ']} {course['CRSE']} {course['BLDG']} {course['ROOM']}"
-                    unique_courses[time_key] = details_key
+                    details_key = f"{course['SUBJ']} {course['CRSE']}.{course['SEC']} {course['BLDG']} {int(course['ROOM'])}"
+                    if time_key not in unique_courses:
+                        unique_courses[time_key] = []
+                    unique_courses[time_key].append(details_key)
                 except ValueError:
-                    # Handle cases where BEGN might not be a valid float (e.g., corrupted data)
                     print(f"Skipping course with invalid time data: {course['BEGN']}")
 
     unique_times = sorted(unique_courses.keys(), key=lambda x: int(x))  # Sort times as integers
@@ -305,18 +300,22 @@ def layout_professors_courses_TR():
         layout.append([{'x': 0, 'y': idx+1, 'w': 1, 'h': 1, 'i': time, 'static': True}])
         # Course details per professor
         for prof_idx, prof in enumerate(professors):
-            # Match based on time key, ignoring days and matching only on the hour
-            course_details = next((c for c in prof['Courses'] if c['BEGN'] is not None and int(float(c['BEGN'])) == int(time)), None)
+            courses_at_time = [c for c in prof['Courses'] if c['BEGN'] is not None and int(float(c['BEGN'])) == int(time)]
+            course_details = next((c for c in courses_at_time), None)
             if course_details:
-                details = unique_courses[time]
-                layout[-1].append({'x': prof_idx+1, 'y': idx+1, 'w': 1, 'h': 1, 'i': details, 'static': True, 'is_dept': True})
+                details_list = unique_courses[time]
+                # Ensure to find the exact course detail
+                details = next((d for d in details_list if f"{course_details['SUBJ']} {course_details['CRSE']}.{course_details['SEC']} {course_details['BLDG']} {int(course_details['ROOM'])}" == d), None)
+                if details:
+                    layout[-1].append({'x': prof_idx+1, 'y': idx+1, 'w': 1, 'h': 1, 'i': details, 'static': True, 'is_dept': True})
 
     # Print or return layout as needed
     output = []
     for row in layout:
-        for entry in row:
-            output.append(entry)
+        for idx in range(0, len(row)):
+            output.append(row[idx])
     print(output)
+
 
 
 def layout_location_time_MWF():
